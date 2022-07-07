@@ -1,6 +1,5 @@
 package com.esgi.tp_spring.repositories;
 
-import com.esgi.tp_spring.entities.Trip;
 import com.esgi.tp_spring.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

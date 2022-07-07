@@ -30,7 +30,7 @@ public class TripController {
 
     @Operation(summary = "Création d'une sortie ou modification d'une sortie existante")
     @RequestMapping(method = RequestMethod.PUT)
-    public Trip createOrUpdateTrip(@RequestBody @Valid TripRequestDTO trip) throws ResourceNotFoundException {
+    public TripDTO createOrUpdateTrip(@RequestBody @Valid TripRequestDTO trip) throws ResourceNotFoundException {
         return tripService.createOrUpdate(trip);
     }
 

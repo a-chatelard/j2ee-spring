@@ -24,7 +24,7 @@ public class TripService {
     @Autowired
     private UserService userService;
 
-    public Trip createOrUpdate(TripRequestDTO tripDTO) throws ResourceNotFoundException {
+    public TripDTO createOrUpdate(TripRequestDTO tripDTO) throws ResourceNotFoundException {
         logger.info("Saving trip of name " + tripDTO.getName());
         Trip trip = new Trip();
         if (tripDTO.getId() != null) {
@@ -43,7 +43,7 @@ public class TripService {
 
         tripRepository.save(trip);
         logger.info("Trip of title " + trip.getName() + " saved with ID " + trip.getId());
-        return trip;
+        return new TripDTO(trip);
     }
 
     public Trip getById(Long tripId) throws ResourceNotFoundException {
@@ -87,9 +87,10 @@ public class TripService {
         if (trip.isPresent()) {
             tripRepository.deleteById(tripId);
             logger.info("Trip of id " + tripId + " deleted.");
+        } else {
+            logger.error("Trip of id " + tripId + " not found.");
+            throw new ResourceNotFoundException(Trip.class, tripId);
         }
-        logger.error("Trip of id " + tripId + " not found.");
-        throw new ResourceNotFoundException(Trip.class, tripId);
     }
 
     public TripDetailsDTO addParticipant(Long tripId, String username) throws ResourceNotFoundException {

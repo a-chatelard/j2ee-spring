@@ -1,8 +1,5 @@
 package com.esgi.tp_spring.entities;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -42,12 +39,12 @@ public class Trip {
     @Column(name="location")
     private String location;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "supervisor")
     @NotNull
     private User supervisor;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<User> participants;
 
     public Long getId() {
