@@ -1,6 +1,6 @@
 package com.esgi.tp_spring.controllers;
 
-import com.esgi.tp_spring.dto.ValidationError;
+import com.esgi.tp_spring.dto.results.ValidationError;
 import com.esgi.tp_spring.services.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

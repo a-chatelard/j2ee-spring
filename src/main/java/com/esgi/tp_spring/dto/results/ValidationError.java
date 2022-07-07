@@ -1,5 +1,4 @@
-package com.esgi.tp_spring.dto;
-
+package com.esgi.tp_spring.dto.results;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +7,7 @@ public class ValidationError {
 
     private String errorMessage;
 
-    private Map<String, String> fieldErrors;
+    private Map<String, String> fieldErrors = new HashMap<>();
 
     public String getErrorMessage() {
         return errorMessage;
@@ -22,14 +21,7 @@ public class ValidationError {
         return fieldErrors;
     }
 
-    public void setFieldErrors(Map<String, String> fieldErrors) {
-        this.fieldErrors = fieldErrors;
-    }
-
     public void addFieldError(String field, String error) {
-        if (this.fieldErrors == null) {
-            this.fieldErrors = new HashMap<>();
-        }
         this.fieldErrors.put(field, error);
     }
 }

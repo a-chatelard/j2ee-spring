@@ -1,8 +1,10 @@
 package com.esgi.tp_spring.controllers;
 
 import com.esgi.tp_spring.controllers.helpers.SecurityContextHelper;
-import com.esgi.tp_spring.entities.Trip;
-import com.esgi.tp_spring.entities.User;
+import com.esgi.tp_spring.dto.requests.UserRequestDTO;
+import com.esgi.tp_spring.dto.results.UserDetailsDTO;
+import com.esgi.tp_spring.dto.results.TripDTO;
+import com.esgi.tp_spring.dto.results.UserDTO;
 import com.esgi.tp_spring.services.UserService;
 import com.esgi.tp_spring.services.exceptions.ResourceNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,32 +30,32 @@ public class UserController {
 
     @Operation(summary = "Création d'un utilisateur ou modification de l'utilisateur ayant l'username correspondant.")
     @RequestMapping(method = RequestMethod.PUT)
-    public User createOrUpdate(@RequestBody @Valid User user) {
+    public UserDetailsDTO createOrUpdate(@RequestBody @Valid UserRequestDTO user) {
         return userService.createOrUpdate(user);
     }
 
     @Operation(summary = "Récupération d'un utilisateur via son username.")
     @RequestMapping(path = "/{username}", method = RequestMethod.GET)
     @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
-    public User getUser(@PathVariable(name = "username") String username) throws ResourceNotFoundException {
-        return userService.getById(username);
+    public UserDetailsDTO getUser(@PathVariable(name = "username") String username) throws ResourceNotFoundException {
+        return userService.getInfosById(username);
     }
 
     @Operation(summary = "Récupération de tous les utilisateurs avec pagination")
     @RequestMapping(method = RequestMethod.GET)
-    public Page<User> getAllUsersPaged(Pageable pageable) {
+    public Page<UserDTO> getAllUsersPaged(Pageable pageable) {
         return userService.getAllPaged(pageable);
     }
 
     @Operation(summary = "Récupération de tous les utilisateurs avec filtre simple et pagination")
-    @RequestMapping(method = RequestMethod.GET)
-    public Page<User> getAllUsersFilteredAndPaged(String filter, Pageable pageable) {
+    @RequestMapping(path = "/filter", method = RequestMethod.GET)
+    public Page<UserDTO> getAllUsersFilteredAndPaged(String filter, Pageable pageable) {
         return userService.getAllFilteredAndPaged(filter, pageable);
     }
 
     @Operation(summary = "Récupération des sorties d'un utilisateur")
     @RequestMapping(path = "/{username}/trips", method = RequestMethod.GET)
-    public Page<Trip> getUserTripsParticipations(@PathVariable(name = "username") String username, Pageable pageable)
+    public Page<TripDTO> getUserTripsParticipations(@PathVariable(name = "username") String username, Pageable pageable)
             throws ResourceNotFoundException {
         return userService.getTripsParticipationsPaged(username, pageable);
     }

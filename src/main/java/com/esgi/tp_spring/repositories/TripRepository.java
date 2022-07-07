@@ -15,4 +15,9 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 
     @Query("SELECT t FROM Trip t WHERE t.name LIKE ?1 OR t.description LIKE ?1 OR t.location LIKE ?1")
     Page<Trip> simpleSearch(String filter, Pageable pageable);
+
+    @Query("SELECT t FROM Trip t WHERE FUNCTION('MONTH', t.date) = ?1 AND FUNCTION('YEAR', t.date) = ?2")
+    Page<Trip> findByMonthAndYear(Integer month, Integer year, Pageable pageable);
+
+    Page<Trip> findByParticipantsEmpty(Pageable pageable);
 }

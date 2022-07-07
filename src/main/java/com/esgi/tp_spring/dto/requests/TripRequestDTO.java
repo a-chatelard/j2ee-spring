@@ -1,54 +1,58 @@
-package com.esgi.tp_spring.entities;
+package com.esgi.tp_spring.dto.requests;
 
+import com.esgi.tp_spring.entities.Trip;
+import com.esgi.tp_spring.entities.TripComplexity;
+import com.esgi.tp_spring.entities.User;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
-import java.util.Set;
 
-@Entity
-@Table(name = "trips")
-public class Trip {
-
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TripRequestDTO implements IRequestDTO<Trip>{
     private Long id;
 
-    @Column(name="name")
     @NotBlank
     private String name;
 
-    @Column(name="description")
     private String description;
 
-    @Column(name="date")
     @NotNull
     @Future
     private Date date;
 
-    @Column(name="duration")
     @NotNull
     @Min(1)
     @Max(12)
     private Integer duration;
 
-    @Column(name="complexity")
-    @Enumerated
     private TripComplexity complexity;
 
-    @Column(name="location")
     private String location;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "supervisor")
     @NotNull
-    private User supervisor;
+    private String supervisorUsername;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<User> participants;
+    @Override
+    public Trip ToEntity() {
+        var trip = new Trip();
+
+        if (this.id != null) {
+            trip.setId(this.id);
+        }
+
+        trip.setName(this.name);
+        trip.setDescription(this.description);
+        trip.setDate(this.date);
+        trip.setDuration(this.duration);
+        trip.setComplexity(this.complexity);
+        trip.setLocation(this.location);
+
+        var supervisor = new User();
+        supervisor.setUsername(this.supervisorUsername);
+
+        trip.setSupervisor(supervisor);
+
+        return trip;
+    }
 
     public Long getId() {
         return id;
@@ -106,27 +110,11 @@ public class Trip {
         this.location = location;
     }
 
-    public User getSupervisor() {
-        return supervisor;
+    public String getSupervisorUsername() {
+        return supervisorUsername;
     }
 
-    public void setSupervisor(User supervisor) {
-        this.supervisor = supervisor;
-    }
-
-    public Set<User> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(Set<User> participants) {
-        this.participants = participants;
-    }
-
-    public void addParticipant(User participant) {
-        this.participants.add(participant);
-    }
-
-    public void removeParticipant(User participant) {
-        this.participants.remove(participant);
+    public void setSupervisorUsername(String supervisorUsername) {
+        this.supervisorUsername = supervisorUsername;
     }
 }
