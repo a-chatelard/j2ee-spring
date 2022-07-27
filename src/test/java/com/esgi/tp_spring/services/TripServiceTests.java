@@ -3,7 +3,6 @@ package com.esgi.tp_spring.services;
 import com.esgi.tp_spring.dto.results.UserUsernameDTO;
 import com.esgi.tp_spring.helpers.DTOService;
 import com.esgi.tp_spring.helpers.UserHelper;
-import com.esgi.tp_spring.services.TripService;
 import com.esgi.tp_spring.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

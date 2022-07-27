@@ -21,7 +21,7 @@ public class TripService {
 
     @Autowired
     private TripRepository tripRepository;
-    @Autowired
+    @Autowired(required = false)
     private UserService userService;
 
     public TripDTO createOrUpdate(TripRequestDTO tripDTO) throws ResourceNotFoundException {

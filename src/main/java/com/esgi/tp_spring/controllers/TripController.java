@@ -12,11 +12,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("trips")
@@ -43,7 +45,7 @@ public class TripController {
 
     @Operation(summary = "Récupération de toutes les sorties avec pagination")
     @RequestMapping(method = RequestMethod.GET)
-    public Page<TripDTO> getAllTripsPaged(Pageable pageable) {
+    public Page<TripDTO> getAllTripsPaged(@PageableDefault Pageable pageable) {
         return tripService.getAllPaged(pageable);
     }
 
